@@ -16,21 +16,21 @@ const crearUsuario=async (req,res=response)=>{
                 })
             }
 
-            const usuario=new Usuario(req.body)
+            const usuarioDB=new Usuario(req.body)
 
             //ENCRIPTAR CONTRASENIA 
             const salt = bcrypt.genSaltSync();
-            usuario.password=bcrypt.hashSync(password,salt);
+            usuarioDB.password=bcrypt.hashSync(password,salt);
 
 
-            await usuario.save()
+            await usuarioDB.save()
             
             //generar JWT 
-            const token = await generarJWT(usuario.id);
+            const token = await generarJWT(usuarioDB.id);
 
                 res.json({
                     ok:true,
-                    usuario,
+                    usuarioDB,
                     token
                 })
 
@@ -97,10 +97,10 @@ const renewToken=async (req,res=response)=>{
     //genero un nuevo jwt en caso de no estar valido
     const token=await generarJWT(uid);
     //Obtengo el usuario por el UID
-    const usuario=await Usuario.findById(uid);
+    const usuarioDB=await Usuario.findById(uid);
     res.json({
         ok:true,
-        usuario,
+        usuarioDB,
         token
     })
 }
