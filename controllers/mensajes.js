@@ -4,7 +4,7 @@ const Mensaje = require('../models/mensaje');
 const obtenerChat = async(req, res) => {
 
     const miId = req.uid;
-    const mensajesDe = req.params.emisor;
+    const mensajesDe = req.params.para;
 
     const last30 = await Mensaje.find({
         $or: [{ emisor: miId, para: mensajesDe }, { emisor: mensajesDe, para: miId } ]
