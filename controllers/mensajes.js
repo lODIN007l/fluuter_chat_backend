@@ -4,7 +4,8 @@ const Mensaje = require('../models/mensaje');
 const obtenerChat = async(req, res) => {
 
     const miId = req.uid;
-    const mensajesDe = req.params.para;
+    const mensajesDe = req.params.emisor;
+   
 
     const last30 = await Mensaje.find({
         $or: [{ emisor: miId, para: mensajesDe }, { emisor: mensajesDe, para: miId } ]
@@ -15,6 +16,7 @@ const obtenerChat = async(req, res) => {
     res.json({
         ok: true,
         mensajes: last30
+      
     })
 
 }
